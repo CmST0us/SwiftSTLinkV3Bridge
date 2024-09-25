@@ -1,0 +1,5 @@
+module CSTLinkV3Bridge {
+    header "stlink-v3-bridge.h"
+    requires cplusplus
+    export *
+}
