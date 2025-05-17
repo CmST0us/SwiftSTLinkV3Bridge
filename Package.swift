@@ -20,9 +20,6 @@ let package = Package(
             ],
             swiftSettings: [
                 .unsafeFlags([
-                    "-I", "Sources/CSTLinkV3Bridge/src/bridge",
-                    "-I", "Sources/CSTLinkV3Bridge/src/common",
-                    "-I", "Sources/CSTLinkV3Bridge/src/error",
                     "-cxx-interoperability-mode=default"
                 ])
             ],
@@ -43,18 +40,10 @@ let package = Package(
             ],
             swiftSettings: [
                 .unsafeFlags([
-                    "-I", "Sources/CSTLinkV3Bridge/src/bridge",
-                    "-I", "Sources/CSTLinkV3Bridge/src/common",
-                    "-I", "Sources/CSTLinkV3Bridge/src/error",
                     "-cxx-interoperability-mode=default"
                 ])
             ]),
 
-        .target(name: "CSTLinkV3Bridge",
-                cSettings: [
-                    .headerSearchPath("src/bridge"),
-                    .headerSearchPath("src/common"),
-                    .headerSearchPath("src/error")
-                ])
+        .target(name: "CSTLinkV3Bridge")
     ]
 )
