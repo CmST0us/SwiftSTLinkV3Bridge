@@ -17,6 +17,17 @@ if let _ = device.readI2C(addr: UInt16(addr.address7Bit!), length: 1) {
     print(String(format: "发现I2C设备: 0x%02X", addr.address7Bit!))
 }
 
+var spiConfiguration = SPIDeviceConfiguration.default
+spiConfiguration.nss = .soft
+device.initSPI(configuration: spiConfiguration)
+device.setSPINss(level: .low)
+
+let rstConfiguration = GPIOConfiguration.pushPullOutput
+device.initGPIO(mask: .gpio0, config: [rstConfiguration])
+
+let nssConfiguration = GPIOConfiguration.pushPullOutput
+device.initGPIO(mask: .gpio1, config: [nssConfiguration])
+
 // === 调用示例 ===
 
 func testSSD1306() {
@@ -27,4 +38,3 @@ func testSSD1306() {
 }
 
 testSSD1306()
-
