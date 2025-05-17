@@ -6,16 +6,24 @@ device.enumDevices()
 device.openDevice()
 device.testDevice()
 
-let i2cConfiguration = I2CConfiguration.fastPlus
-device.initI2CDevice(configuration: i2cConfiguration)
+// 配置 I2C
+let i2cConfig = I2CConfiguration.fastPlus
+device.initI2CDevice(configuration: i2cConfig)
 
-print("开始扫描I2C设备...")
+// print("开始扫描 I2C 设备...")
+// print("地址\t设备")
+// print("----------------")
 
-let addr = I2CAddress.address8BitWrite(0x78)
-// 尝试读取1字节
-if let _ = device.readI2C(addr: UInt16(addr.address7Bit!), length: 1) {
-    print(String(format: "发现I2C设备: 0x%02X", addr.address7Bit!))
-}
+// // 扫描所有可能的 I2C 地址（0x00-0x7F）
+// for addr in 0x00...0x7F {
+//     let i2cAddr = I2CAddress.address7Bit(UInt8(addr))
+//     if let _ = device.readI2C(addr: UInt16(i2cAddr.address7Bit!), length: 1) {
+//         print(String(format: "0x%02X\t已响应", addr))
+//     }
+// }
+
+// print("扫描完成")
+
 
 var spiConfiguration = SPIDeviceConfiguration.default
 spiConfiguration.nss = .soft

@@ -103,7 +103,7 @@ public class Bridge {
         var sizeRead: UInt16 = 0
         let status = bridge.pointee.ReadI2C(&buffer, addr, addrMode.cValue, length, &sizeRead)
         if status == BRG_NO_ERR {
-            return Array(buffer.prefix(Int(sizeRead)))
+            return Array(buffer.prefix(Int(length)))
         } else {
             print("ReadI2C error: \(status)")
             return nil
@@ -118,7 +118,7 @@ public class Bridge {
         var sizeRead: UInt16 = 0
         let status = bridge.pointee.ReadI2C(&buffer, addr, addrMode.cValue, length, &sizeRead)
         if status == BRG_NO_ERR {
-            return Array(buffer.prefix(Int(sizeRead)))
+            return Array(buffer.prefix(Int(length)))
         } else {
             print("ReadI2C error: \(status)")
             return nil
@@ -144,7 +144,7 @@ public class Bridge {
         var sizeRead: UInt16 = 0
         let status = bridge.pointee.StartReadI2C(&buffer, addr, addrMode.cValue, length, &sizeRead)
         if status == BRG_NO_ERR {
-            return Array(buffer.prefix(Int(sizeRead)))
+            return Array(buffer.prefix(Int(length)))
         } else {
             print("StartReadI2C error: \(status)")
             return nil
@@ -157,7 +157,7 @@ public class Bridge {
         var sizeRead: UInt16 = 0
         let status = bridge.pointee.ContReadI2C(&buffer, length, &sizeRead)
         if status == BRG_NO_ERR {
-            return Array(buffer.prefix(Int(sizeRead)))
+            return Array(buffer.prefix(Int(length)))
         } else {
             print("ContReadI2C error: \(status)")
             return nil
@@ -170,7 +170,7 @@ public class Bridge {
         var sizeRead: UInt16 = 0
         let status = bridge.pointee.StopReadI2C(&buffer, length, &sizeRead)
         if status == BRG_NO_ERR {
-            return Array(buffer.prefix(Int(sizeRead)))
+            return Array(buffer.prefix(Int(length)))
         } else {
             print("StopReadI2C error: \(status)")
             return nil
