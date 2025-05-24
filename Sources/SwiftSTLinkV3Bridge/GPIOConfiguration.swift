@@ -3,16 +3,16 @@ import Cxx
 import CxxStdlib
 
 public struct GPIOConfiguration {
-    public var mode: Brg_GpioModeT
-    public var speed: Brg_GpioSpeedT
-    public var pull: Brg_GpioPullT
-    public var outputType: Brg_GpioOutputT
+    public var mode: GPIOMode
+    public var speed: GPIOSpeed
+    public var pull: GPIOPull
+    public var outputType: GPIOOutputType
 
     public init(
-        mode: Brg_GpioModeT = GPIO_MODE_OUTPUT,
-        speed: Brg_GpioSpeedT = GPIO_SPEED_HIGH,
-        pull: Brg_GpioPullT = GPIO_NO_PULL,
-        outputType: Brg_GpioOutputT = GPIO_OUTPUT_PUSHPULL
+        mode: GPIOMode = .output,
+        speed: GPIOSpeed = .high,
+        pull: GPIOPull = .none,
+        outputType: GPIOOutputType = .pushPull
     ) {
         self.mode = mode
         self.speed = speed
@@ -23,10 +23,10 @@ public struct GPIOConfiguration {
     /// 转为 C 层 Brg_GpioConfT
     public var cStruct: Brg_GpioConfT {
         Brg_GpioConfT(
-            Mode: mode,
-            Speed: speed,
-            Pull: pull,
-            OutputType: outputType
+            Mode: mode.cValue,
+            Speed: speed.cValue,
+            Pull: pull.cValue,
+            OutputType: outputType.cValue
         )
     }
 }
@@ -37,19 +37,19 @@ public extension GPIOConfiguration {
     static let pushPullOutput = GPIOConfiguration()
 
     /// 开漏输出，高速，无上下拉
-    static let openDrainOutput = GPIOConfiguration(outputType: GPIO_OUTPUT_OPENDRAIN)
+    static let openDrainOutput = GPIOConfiguration(outputType: .openDrain)
 
     /// 输入，无上下拉
-    static let input = GPIOConfiguration(mode: GPIO_MODE_INPUT)
+    static let input = GPIOConfiguration(mode: .input)
 
     /// 输入，上拉
-    static let inputPullUp = GPIOConfiguration(mode: GPIO_MODE_INPUT, pull: GPIO_PULL_UP)
+    static let inputPullUp = GPIOConfiguration(mode: .input, pull: .up)
 
     /// 输入，下拉
-    static let inputPullDown = GPIOConfiguration(mode: GPIO_MODE_INPUT, pull: GPIO_PULL_DOWN)
+    static let inputPullDown = GPIOConfiguration(mode: .input, pull: .down)
 
     /// 模拟输入
-    static let analog = GPIOConfiguration(mode: GPIO_MODE_ANALOG)
+    static let analog = GPIOConfiguration(mode: .analog)
 }
 
 // MARK: - GPIO 掩码 Swift OptionSet
@@ -202,9 +202,9 @@ public extension GPIOOutputType {
 
 public extension GPIOConfiguration {
     init(cStruct: Brg_GpioConfT) {
-        self.mode = cStruct.Mode
-        self.speed = cStruct.Speed
-        self.pull = cStruct.Pull
-        self.outputType = cStruct.OutputType
+        self.mode = GPIOMode(cValue: cStruct.Mode)
+        self.speed = GPIOSpeed(cValue: cStruct.Speed)
+        self.pull = GPIOPull(cValue: cStruct.Pull)
+        self.outputType = GPIOOutputType(cValue: cStruct.OutputType)
     }
 } 
